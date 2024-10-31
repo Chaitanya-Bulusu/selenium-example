@@ -1,18 +1,18 @@
 package org.selenium.example.test;
 
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.LoadableComponent;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.testng.Assert.assertTrue;
 
 
-public class Test_LoginPage extends LoadableComponent<Test_LoginPage> {
-    private final WebDriver driver;
+public class Test_LoginPage extends Test_PageLoad {
 
-    private final LoadableComponent<?> testPageLoad;
+    private final String email;
+    private final String password;
     @FindBy(id = "HeaderContentPlaceHolder_loginControl_txtEmail")
     private WebElement txtEmail;
     @FindBy(id = "HeaderContentPlaceHolder_loginControl_txtPassword")
@@ -23,29 +23,28 @@ public class Test_LoginPage extends LoadableComponent<Test_LoginPage> {
     @FindBy(id = "HeaderContentPlaceHolder_LoginNotice_lblDispName")
     private WebElement lblUser;
 
-    public Test_LoginPage(WebDriver driver, LoadableComponent<?> testPageLoad) {
-        this.testPageLoad = testPageLoad;
-        this.driver = driver;
+
+    public Test_LoginPage() {
+        this.email = testConfig.getEmail();
+        this.password = testConfig.getPassword();
+
+    }
+
+    @BeforeClass
+    public void setUp() {
+        super.isLoaded();
         PageFactory.initElements(driver, this);
     }
 
-    @Override
-    protected void load() {
-
-    }
-
-    @Override
-    protected void isLoaded() throws Error {
-        this.testPageLoad.get();
-        this.login();
-    }
-
-    private void login() {
-        clearAndType(txtEmail, "chaitanya97@gmail.com");
-        clearAndType(txtPassword, "Chaitu@3");
+    @Test(priority = 1)
+    public void login() {
+        clearAndType(txtEmail, email);
+        clearAndType(txtPassword, password);
         btnSignIn.click();
         TestConfig.testConfigObj().getWait(driver).until(d -> lblUser.isDisplayed());
+
         assertTrue(lblUser.getText().equals("Chaitanya Bulusu"));
+
     }
 
     private void clearAndType(WebElement element, String text) {

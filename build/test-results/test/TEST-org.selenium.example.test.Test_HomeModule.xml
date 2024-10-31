@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="org.selenium.example.test.Test_HomeModule" tests="1" skipped="0" failures="0" errors="0" timestamp="2024-09-10T18:08:24" hostname="DESKTOP-J081CEV" time="0.087">
-  <properties/>
-  <testcase name="test_placeOrderSuccessfully()" classname="org.selenium.example.test.Test_HomeModule" time="0.087"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>
